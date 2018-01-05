@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  mongodb:
+    image: mongo
+    env_file: mongo.env
+    hostname: wikijs-mongo
+    networks:
+      - blog
+    volumes:
+      - mongodb
+
+  wikijs:
+    image: requarks/wiki
+    hostname: wikijs
+    networks:
+      - blog
+    volumes:
+      - "./raven_blog/wiki-config.yml:/var/wiki/config.yml:rw"
+    ports:
+      - "8080:3000"
+    links:
+      - mongodb:wikijs-mongo
+
+networks:
+  blog:
+    driver: bridge
+
+volumes:
+  mongodb:
