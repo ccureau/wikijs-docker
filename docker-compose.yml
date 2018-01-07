@@ -10,9 +10,10 @@ services:
   #   volumes:
   #     - mongodb
 
-  wikijs-centos7:
+  wikijs:
     build:
       context: wikijs-centos7
+    env_file: wikijs.env
     hostname: wikijs
     networks:
       - blog

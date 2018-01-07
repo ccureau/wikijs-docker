@@ -6,13 +6,14 @@ RUN yum makecache fast && \
     yum install -y curl && \
     curl --silent --location https://raw.githubusercontent.com/iuscommunity/automation-examples/bash/enable-ius.sh | bash - && \
     curl --silent --location https://rpm.nodesource.com/setup_8.x | bash - && \
-    yum install -y supervisor mongodb mongodb-server nodejs gcc-c++ make git2u && \
-    npm install wiki.js@latest \
+    yum install -y supervisor nodejs gcc-c++ make git2u && \
     yum clean all && \
     rm -rf /var/cache/yum
 
-COPY files/supervisor/mongo.ini /etc/supervisord.d/mongo.ini
+COPY files/supervisor/supervisord.conf /etc/supervisord.conf
+COPY files/setup.sh /root/setup.sh
 
-CMD ["/usr/bin/supervisord", "-n"]
+WORKDIR /root
+CMD ["bash", "setup.sh"]
 
 EXPOSE 3000
