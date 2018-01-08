@@ -1,14 +1,14 @@
 version: '3'
 
 services:
-  # mongodb:
-  #   image: mongo
-  #   env_file: mongo.env
-  #   hostname: wikijs-mongo
-  #   networks:
-  #     - blog
-  #   volumes:
-  #     - mongodb
+  mongodb:
+    image: mongo
+    env_file: mongo.env
+    hostname: wikijs-mongo
+    networks:
+      - blog
+    volumes:
+      - mongodb
 
   wikijs:
     build:
@@ -19,12 +19,12 @@ services:
       - blog
     ports:
       - "8080:3000"
-    # links:
-    #   - mongodb:wikijs-mongo
+    links:
+      - mongodb:wikijs-mongodb
 
 networks:
   blog:
     driver: bridge
 
-# volumes:
-#   mongodb:
+volumes:
+  mongodb:
